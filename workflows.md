@@ -1,4 +1,7 @@
-Download https://zenodo.org/record/3357167#.YBx8jXczZQI
+
+
+
+
 https://docs.google.com/document/d/1ZWoE0LAC9vkGhb9Jb8o9lM5z8fEPA906/edit
 
 source('~/Sources/scRNAseq_Benchmark/Cross_Validation.R')
