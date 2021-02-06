@@ -1,6 +1,6 @@
 FROM rocker/rstudio
 
-RUN apt-get upate
+RUN apt-get update
 RUN apt-get install -y zlib1g-dev
 RUN apt-get install -y libxml2-dev
 RUN apt-get install -y libcurl4-openssl-dev libssl-dev
