@@ -16,3 +16,4 @@ RUN mv scRNAseq_Benchmark_datasets.zip?dl=0 scRNAseq_Benchmark_datasets.zip
 RUN unzip scRNAseq_Benchmark_datasets.zip
 
 RUN git clone https://github.com/binfnstats/scRNAseq_Benchmark.git
+RUN chmod -R 777 /scRNAseq_Benchmark
