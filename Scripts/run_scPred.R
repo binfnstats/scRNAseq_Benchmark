@@ -1,3 +1,66 @@
+
+eigenDecompose <- function(expData, n = 10, pseudo = TRUE, returnData = TRUE, seed = 66){
+  
+  # Parameter validations
+  
+  if(!is(expData, "matrix")){
+    stop("Expression data must be a matrix object")
+  }
+  
+  expData <- t(expData)
+  
+  if(pseudo){
+    expData <- log2(expData + 1)
+  }
+  
+
+  # Remove features with zero variance --------------------------------------
+  
+  zeroVar <- apply(expData, 2, var) == 0
+  
+  if(any(zeroVar)){
+    expData <- expData[,!zeroVar]
+    message(paste0(sum(zeroVar), " following genes were removed as their variance is zero across all cells:"))
+    cat(paste0(names(zeroVar), collapse = "\n"), "\n", sep = "")
+  }
+
+  # Call prcomp() function
+  message("Performing Lanczos bidiagonalization...")
+  set.seed(66)
+  svd <- prcomp_irlba(expData, n = n, center = TRUE, scale. = TRUE)
+  class(svd)
+  
+  rownames(svd$x) <- rownames(expData)
+  rownames(svd$rotation) <- colnames(expData)
+  
+  
+  expData <- expData + 0
+  nCells <- nrow(expData)
+  
+ 
+  f <- function(i) sqrt(sum((expData[, i] - svd$center[i])^2)/(nCells -  1L))
+  scale. <- vapply(seq(ncol(expData)), f, pi, USE.NAMES = TRUE)
+  
+  
+  names(scale.) <- names(svd$center)
+  svd$scale <- scale.
+    
+  # Extract variance
+  varianceExplained <- svd$sdev**2 / sum(svd$sdev**2)*100
+  names(varianceExplained) <- colnames(svd$x)
+  
+  message("DONE!")
+  
+  svd <- svd[c("x", "rotation", "center", "scale", "sdev")]
+  
+  if(returnData){
+    return(new("scPred", svd = svd, expVar = varianceExplained, pseudo = pseudo, trainData = Matrix(t(expData))))
+    
+  }else{
+    return(new("scPred", svd = svd, expVar = varianceExplained, pseudo = pseudo)) 
+  } 
+}
+
 run_scPred<-function(DataPath,LabelsPath,CV_RDataPath,OutputDir,GeneOrderPath = NULL,NumGenes = NULL){
   "
   run scPred
