@@ -34,6 +34,8 @@ Cross_Validation <- function(LabelsPath, col_Index = 1,OutputDir){
     Test_Idx[i] <- Folds[Test_Folds[i]]
   }
   remove(Temp_Folds,i,Folds)
+  old <- getwd()
   setwd(OutputDir)
   save(n_folds,Train_Idx,Test_Idx,col_Index,Cells_to_Keep,file = 'CV_folds.RData')
+  setwd(old)
 }
