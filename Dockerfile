@@ -11,6 +11,7 @@ RUN R -e "devtools::install_github('immunogenomics/harmony')"
 RUN R -e "devtools::install_github('powellgenomicslab/scPred')"
 RUN R -e "devtools::install_github('rBayesianOptimization')"
 RUN R -e "devtools::install_github('tidyverse')"
+RUN R -e "devtools::install_github('irlba')"
 
 RUN wget https://www.dropbox.com/s/hocdlhr1wr2wpcd/scRNAseq_Benchmark_datasets.zip?dl=0
 RUN mv scRNAseq_Benchmark_datasets.zip?dl=0 scRNAseq_Benchmark_datasets.zip
