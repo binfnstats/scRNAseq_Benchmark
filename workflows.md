@@ -5,5 +5,5 @@
     run_scPred('Filtered_68K_PBMC_data.csv', 'Labels.csv', 'CV_folds.RData', 'Results/')
 
 
-https://docs.google.com/document/d/1ZWoE0LAC9vkGhb9Jb8o9lM5z8fEPA906/edit
+
 
